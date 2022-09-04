@@ -20,13 +20,13 @@ use App\Http\Controllers\UsersController;
 //     return $request->user();
 // });
 
-Route::group(['prefix' => 'v1'], function () {
+Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [UsersController::class,'login']);
     Route::post('/register', [UsersController::class,'register']);
     Route::get('/logout', [UsersController::class,'logout'])->middleware('auth:api');
 });
 
-Route::group(['prefix' =>'ad'],function(){
-    Route::get('/createProfile',[ElderlyProfileController::class,'createElderlyProfile']);
+Route::group(['prefix' =>'admin'],function(){
+    Route::post('/createProfile',[ElderlyProfileController::class,'createElderlyProfile']);
     Route::get('/viewProfile',[ElderlyProfileController::class,'viewElderlyProfile']);
 });

@@ -60,10 +60,8 @@ class ElderlyProfileController extends Controller
     public function viewElderlyProfile()
     {
         $data= [];
-
         $viewProfile = DB::table('elderly_profiles')->get();
         // $view = $viewProfile->toArray();
-
         
         foreach($viewProfile as $vp){
             $data[] = [
@@ -74,7 +72,6 @@ class ElderlyProfileController extends Controller
                 'roomID' => $vp->roomID,
                 'descrition' => $vp->descrition,
                 'erID' => $vp->erID,
-
             ];
         };
 
