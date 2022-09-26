@@ -35,6 +35,7 @@ class ElderlyProfileController extends Controller
         $profile = elderlyProfile::create(
 
             [
+                
                 'name' => $input['name'],
                 'DOB' => $input['DOB'],
                 'gender' => $input['gender'],
@@ -65,6 +66,7 @@ class ElderlyProfileController extends Controller
         
         foreach($viewProfile as $vp){
             $data[] = [
+                'id' => $vp->id,
                 'name' => $vp->name,
                 'DOB' => $vp->DOB,
                 'gender' => $vp->gender,
@@ -74,6 +76,9 @@ class ElderlyProfileController extends Controller
                 'erID' => $vp->erID,
             ];
         };
+
+
+
 
         return response()->json(
             [$data]
