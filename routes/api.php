@@ -29,4 +29,5 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' =>'admin'],function(){
     Route::post('/createProfile',[ElderlyProfileController::class,'createElderlyProfile']);
     Route::get('/viewProfile',[ElderlyProfileController::class,'viewElderlyProfile']);
+    Route::get('/viewProfileByID/{id}',[ElderlyProfileController::class,'viewElderlyProfileByID']);
 });

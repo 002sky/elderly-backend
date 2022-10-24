@@ -33,9 +33,7 @@ class ElderlyProfileController extends Controller
         // if (Auth::user()->status == 'is_Admin') {
         $input = $request->all();
         $profile = elderlyProfile::create(
-
             [
-                
                 'name' => $input['name'],
                 'DOB' => $input['DOB'],
                 'gender' => $input['gender'],
@@ -76,12 +74,31 @@ class ElderlyProfileController extends Controller
                 'erID' => $vp->erID,
             ];
         };
+        return response()->json(
+            [$data]
+        );
+    }
 
+    public function viewElderlyProfileByID(String $id){
 
+        $data= [];
+        $viewProfile = elderlyProfile::find($id);
 
+        $data = [
+            'id' => $viewProfile->id,
+            'name' => $viewProfile->name,
+            'DOB' => $viewProfile->DOB,
+            'gender' => $viewProfile->gender,
+            'bedNo' => $viewProfile->bedNo,
+            'roomID' => $viewProfile->roomID,
+            'descrition' => $viewProfile->descrition,
+            'erID' => $viewProfile->erID,
+        ];
 
         return response()->json(
             [$data]
         );
+
+
     }
 }
