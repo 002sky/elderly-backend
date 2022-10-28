@@ -25,7 +25,6 @@ class ElderlyProfileController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $validator->errors(),
-
             ], 401);
         }
 
@@ -39,7 +38,7 @@ class ElderlyProfileController extends Controller
                 'gender' => $input['gender'],
                 'bedNo' => $input['bedNo'],
                 'roomID' => $input['roomID'],
-                'descrition' => $input['descrition'],
+                'descrition' => 'descrition',
                 'erID' => $input['erID'],
             ]
         );
@@ -58,7 +57,7 @@ class ElderlyProfileController extends Controller
 
     public function viewElderlyProfile()
     {
-        $data= [];
+        $data = [];
         $viewProfile = DB::table('elderly_profiles')->get();
         // $view = $viewProfile->toArray();
         
@@ -81,7 +80,7 @@ class ElderlyProfileController extends Controller
 
     public function viewElderlyProfileByID(String $id){
 
-        $data= [];
+        $data = [];
         $viewProfile = elderlyProfile::find($id);
 
         $data = [

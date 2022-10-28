@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ElderlyProfileController;
+use App\Http\Controllers\scheduleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 
@@ -27,7 +28,14 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' =>'admin'],function(){
+    //profile function
     Route::post('/createProfile',[ElderlyProfileController::class,'createElderlyProfile']);
     Route::get('/viewProfile',[ElderlyProfileController::class,'viewElderlyProfile']);
     Route::get('/viewProfileByID/{id}',[ElderlyProfileController::class,'viewElderlyProfileByID']);
+
+    //schedule function 
+    Route::post('/addSchedule',[scheduleController::class,'addSchedule']);
+    Route::post('/getSchduleData',[scheduleController::class,'getSchduleData']);
+
+    
 });
