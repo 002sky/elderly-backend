@@ -39,6 +39,7 @@ class ElderlyProfileController extends Controller
                 'bedNo' => $input['bedNo'],
                 'roomID' => $input['roomID'],
                 'descrition' => 'descrition',
+                'elderlyImage' => $input['elderlyImage'],
                 'erID' => $input['erID'],
             ]
         );
@@ -70,6 +71,7 @@ class ElderlyProfileController extends Controller
                 'bedNo' => $vp->bedNo,
                 'roomID' => $vp->roomID,
                 'descrition' => $vp->descrition,
+                'elderlyImage'=> $vp->elderlyImage,
                 'erID' => $vp->erID,
             ];
         };

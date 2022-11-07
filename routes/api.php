@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\ElderlyProfileController;
+use App\Http\Controllers\medicationController;
 use App\Http\Controllers\scheduleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
-
+use App\Models\medication;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,10 @@ Route::group(['prefix' =>'admin'],function(){
     //schedule function 
     Route::post('/addSchedule',[scheduleController::class,'addSchedule']);
     Route::post('/getSchduleData',[scheduleController::class,'getSchduleData']);
+
+    //medication function route
+    Route::post('setMedication',[medicationController::class,'setMedication']);
+    Route::get('getMedication',[medicationController::class,'getMedication']);
 
     
 });

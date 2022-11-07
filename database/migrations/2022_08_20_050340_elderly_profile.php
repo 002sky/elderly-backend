@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('roomID');
             $table->string('bedNo');
             $table->longText('descrition');
-  
+            $table->binary('elderlyImage')->nullable();
+
             $table->foreignId('erID')->references('id')->on('users');
        
 

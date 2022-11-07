@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class elderlyProfile extends Model
+class medication extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
-        'name',
-        'DOB',
-        'gender',
-        'roomID',
-        'bedNo',
-        'descrition',
-        'elderlyImage',
-        'erID',
+        'medicationName',
+        'type',
+        'description',
+        'expireDate',
+        'manufactureDate',
+        'quantity',
+        'elderlyID',
+        
     ];
 
     public $timestamps = false;
