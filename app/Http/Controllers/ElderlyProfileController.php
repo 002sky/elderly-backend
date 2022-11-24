@@ -7,6 +7,7 @@ use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\String\ByteString;
 
 class ElderlyProfileController extends Controller
 {
@@ -99,6 +100,36 @@ class ElderlyProfileController extends Controller
         return response()->json(
             [$data]
         );
+
+
+    }
+
+
+    public function editElderlyProfile(Request $request)
+    {
+        $profile = elderlyProfile::find($request->id);
+        
+        try{
+            $profile->name = $request->name;
+            $profile->DOB = $request->DOB;
+            $profile->gender = $request->gender;
+            $profile->roomID = $request->roomID;
+            $profile->bedNo= $request-> bedNo;
+            $profile->descrition= $request-> descrition;
+            $profile->elderImage= $request-> elderImage;
+            $profile->erID = $request-> erID;
+            $profile->save();
+        }catch(e){
+            return response()->json([
+                'success' => false,
+                'message' => 'Update Faile',
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Edits successful',
+        ]);
 
 
     }

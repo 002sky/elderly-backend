@@ -3,6 +3,9 @@
 use App\Http\Controllers\ElderlyProfileController;
 use App\Http\Controllers\medicationController;
 use App\Http\Controllers\scheduleController;
+use App\Http\Controllers\imageController;
+
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Models\medication;
@@ -22,25 +25,25 @@ use App\Models\medication;
 //     return $request->user();
 // });
 
+
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('/login', [UsersController::class,'login']);
-    Route::post('/register', [UsersController::class,'register']);
-    Route::get('/logout', [UsersController::class,'logout'])->middleware('auth:api');
+    Route::post('/login', [UsersController::class, 'login']);
+    Route::post('/register', [UsersController::class, 'register']);
+    Route::get('/logout', [UsersController::class, 'logout'])->middleware('auth:api');
 });
 
-Route::group(['prefix' =>'admin'],function(){
+Route::group(['prefix' => 'admin'], function () {
     //profile function
-    Route::post('/createProfile',[ElderlyProfileController::class,'createElderlyProfile']);
-    Route::get('/viewProfile',[ElderlyProfileController::class,'viewElderlyProfile']);
-    Route::get('/viewProfileByID/{id}',[ElderlyProfileController::class,'viewElderlyProfileByID']);
+
+    Route::post('/createProfile', [ElderlyProfileController::class, 'createElderlyProfile']);
+    Route::get('/viewProfile', [ElderlyProfileController::class, 'viewElderlyProfile']);
+    Route::get('/viewProfileByID/{id}', [ElderlyProfileController::class, 'viewElderlyProfileByID']);
 
     //schedule function 
-    Route::post('/addSchedule',[scheduleController::class,'addSchedule']);
-    Route::post('/getSchduleData',[scheduleController::class,'getSchduleData']);
+    Route::post('/addSchedule', [scheduleController::class, 'addSchedule']);
+    Route::post('/getSchduleData', [scheduleController::class, 'getSchduleData']);
 
     //medication function route
-    Route::post('setMedication',[medicationController::class,'setMedication']);
-    Route::get('getMedication',[medicationController::class,'getMedication']);
-
-    
+    Route::post('/setMedication', [medicationController::class, 'setMedication']);
+    Route::get('/getMedication', [medicationController::class, 'getMedication']);
 });
