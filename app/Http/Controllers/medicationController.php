@@ -63,11 +63,13 @@ class medicationController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Medication created successful',
+                'ID' => $medication->id,
             ]);
         } else {
             return response()->json([
                 'success' => false,
                 'message' => 'Medication create fail',
+                'ID' => '123',
             ]);
         };
     }

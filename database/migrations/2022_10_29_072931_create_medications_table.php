@@ -22,7 +22,6 @@ return new class extends Migration
             $table->dateTime('manufactureDate', $precision = 0);
             $table->integer('quantity');
             $table->foreignId('elderlyID')->references('id')->on('elderly_profiles')->onDelete('cascade');
-            
             $table->timestamps();
         });
     }

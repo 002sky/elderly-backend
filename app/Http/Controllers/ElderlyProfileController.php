@@ -116,9 +116,10 @@ class ElderlyProfileController extends Controller
             $profile->roomID = $request->roomID;
             $profile->bedNo= $request-> bedNo;
             $profile->descrition= $request-> descrition;
-            $profile->elderImage= $request-> elderImage;
+            $profile->elderlyImage= $request-> elderlyImage;
             $profile->erID = $request-> erID;
             $profile->save();
+
         }catch(e){
             return response()->json([
                 'success' => false,

@@ -4,8 +4,7 @@ use App\Http\Controllers\ElderlyProfileController;
 use App\Http\Controllers\medicationController;
 use App\Http\Controllers\scheduleController;
 use App\Http\Controllers\imageController;
-
-
+use App\Http\Controllers\medication_notification_controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Models\medication;
@@ -36,8 +35,10 @@ Route::group(['prefix' => 'admin'], function () {
     //profile function
 
     Route::post('/createProfile', [ElderlyProfileController::class, 'createElderlyProfile']);
+    Route::post('/editElderlyProfile', [ElderlyProfileController::class, 'editElderlyProfile']);
     Route::get('/viewProfile', [ElderlyProfileController::class, 'viewElderlyProfile']);
     Route::get('/viewProfileByID/{id}', [ElderlyProfileController::class, 'viewElderlyProfileByID']);
+
 
     //schedule function 
     Route::post('/addSchedule', [scheduleController::class, 'addSchedule']);
@@ -46,4 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
     //medication function route
     Route::post('/setMedication', [medicationController::class, 'setMedication']);
     Route::get('/getMedication', [medicationController::class, 'getMedication']);
+    Route::post('/setMedicationTiming', [medication_notification_controller::class, 'setMedicationTiming']);
+    Route::get('/getMedicationTiming', [medication_notification_controller::class, 'getMedicationTiming']);
+
 });
