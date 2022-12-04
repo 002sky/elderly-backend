@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\dailyScheduleController;
 use App\Http\Controllers\ElderlyProfileController;
 use App\Http\Controllers\medicationController;
 use App\Http\Controllers\scheduleController;
@@ -49,5 +50,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/getMedication', [medicationController::class, 'getMedication']);
     Route::post('/setMedicationTiming', [medication_notification_controller::class, 'setMedicationTiming']);
     Route::get('/getMedicationTiming', [medication_notification_controller::class, 'getMedicationTiming']);
+
+    //daily schedule function route
+    Route::get('/scheduleWithin6Hour', [dailyScheduleController::class, 'scheduleWithin6Hour']);
+    Route::post('/taskDetail', [dailyScheduleController::class, 'taskDetail']);
+
+
+    
 
 });
