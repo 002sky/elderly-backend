@@ -17,8 +17,6 @@ class medication_notification_controller extends Controller
         $input = $request->all();
 
 
-
-
         $medicationTiming = medication_notification::create(
             [
                 'medicationID' => $input['elderlyID'],

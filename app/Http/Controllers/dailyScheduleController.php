@@ -41,7 +41,7 @@ class dailyScheduleController extends Controller
     public function taskDetail(Request $request)
     {
 
-        $selctedTime = DB::table("daily_schedules")->where('taskName', '=', $request['taskName'])->where('time', '=', $request['time'])->where('date','=',Carbon::today())->join('medication_notifications', 'medication_notifications.id', '=', 'daily_schedules.MedicationTimeID')->join('medications', 'medications.id', '=', 'medication_notifications.medicationID')->join('elderly_profiles', 'elderly_profiles.id', '=', 'medications.elderlyID')->select('taskname', 'medicationName', 'details', 'type', 'elderlyID', 'name', 'time','daily_schedules.id')->get();
+        $selctedTime = DB::table("daily_schedules")->where('taskName', '=', $request['taskName'])->where('time', '=', $request['time'])->where('date','=',Carbon::today())->join('medication_notifications', 'medication_notifications.id', '=', 'daily_schedules.MedicationTimeID')->join('medications', 'medications.id', '=', 'medication_notifications.medicationID')->join('elderly_profiles', 'elderly_profiles.id', '=', 'medications.elderlyID')->select('taskname', 'medicationName', 'details', 'type', 'elderlyID', 'name', 'time','daily_schedules.id','status')->get();
 
         $array = [];
 
@@ -54,6 +54,7 @@ class dailyScheduleController extends Controller
                     'medication' => [
                         'id' => $data->id,
                         'medicationName' => $data->medicationName,
+                        'status' => $data->status,
                         'type' => $data->type,
                     ]
                 ];
@@ -67,6 +68,7 @@ class dailyScheduleController extends Controller
                     $addDetail = [
                         'id' => $data->id,
                         'medicationName' => $data->medicationName,
+                        'status' => $data->status,
                         'type' => $data->type,
                     ];
 
@@ -86,6 +88,7 @@ class dailyScheduleController extends Controller
                         'medication' => [
                             'id' => $data->id,
                             'medicationName' => $data->medicationName,
+                            'status' => $data->status,
                             'type' => $data->type,
                         ]
                     ];
@@ -97,5 +100,31 @@ class dailyScheduleController extends Controller
         return response()->json([
             $array,
         ]);
+    }
+
+
+    public function updateScheduleStatus(Request $request){
+
+        $input = $request->all();
+
+        try{
+            $scheduleUpdate = DB::table('daily_schedules')->where('id','=',$input['id'])->update(['status' => true]);
+            if($scheduleUpdate > 0){
+                return response()->json(
+                    ['success' => true,
+                    'message' => "status update success",
+                    ]
+                );
+            }
+
+        }catch(\Illuminate\Database\QueryException $e){
+            return response()->json(
+                ['success' => false,
+                'message' => "status update failed",
+                ]
+            );
+        }
+    
+        
     }
 }

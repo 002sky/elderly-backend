@@ -50,10 +50,15 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/getMedication', [medicationController::class, 'getMedication']);
     Route::post('/setMedicationTiming', [medication_notification_controller::class, 'setMedicationTiming']);
     Route::get('/getMedicationTiming', [medication_notification_controller::class, 'getMedicationTiming']);
+    // Route::post('/getMedicationByID', [medicationController::class, 'getMedicationByID']);
 
     //daily schedule function route
     Route::get('/scheduleWithin6Hour', [dailyScheduleController::class, 'scheduleWithin6Hour']);
     Route::post('/taskDetail', [dailyScheduleController::class, 'taskDetail']);
+    Route::post('/updateScheduleStatus', [dailyScheduleController::class, 'updateScheduleStatus']);
+
+
+
 
 
     

@@ -13,7 +13,7 @@ class medicationController extends Controller
     {
         $data = [];
 
-        $medication = DB::table('medications')->get();
+        $medication = DB::table('medications')->join('medication_notifications', 'medications.id','=','medication_notifications.medicationID')->select('medicationName','type','description','expireDate','manufactureDate','quantity','time_status','medications.id','elderlyID')->get();
 
         foreach ($medication as $medica) {
             $data[] = [
@@ -24,6 +24,7 @@ class medicationController extends Controller
                 'expireDate' => $medica->expireDate,
                 'manufactureDate' => $medica->manufactureDate,
                 'quantity' => $medica->quantity,
+                'time'=> json_decode($medica->time_status),
                 'elderlyID' => $medica->elderlyID,
             ];
         };
@@ -72,5 +73,23 @@ class medicationController extends Controller
                 'ID' => '123',
             ]);
         };
+    }
+
+    public function getMedicationByID(Request $request){
+
+        $input = $request->all();
+    
+        $medicationByID = DB::table('medications')->where('elderlyID','=', $input['id'])->join('medication_notifications', 'medications.id','=','medication_notifications.medicationID')->select('medicationName','type','description','expireDate','manufactureDate','quantity','time_status','medications.id')->get();
+
+        if($medicationByID->count()>0){
+            return response()->json(
+                $medicationByID,
+            );
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'something went wrong',
+            ]);
+        }
     }
 }
