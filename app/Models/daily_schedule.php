@@ -9,7 +9,7 @@ class daily_schedule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['taskName','time','date','status','details'];
+    protected $fillable = ['taskName','time','date','status','MedicationTimeID','details'];
 
     protected $cast = [
         'details' => 'array',

@@ -41,10 +41,13 @@ class dailyScheduleController extends Controller
     public function taskDetail(Request $request)
     {
 
+        //pull schedule detail based on date,
         $selctedTime = DB::table("daily_schedules")->where('taskName', '=', $request['taskName'])->where('time', '=', $request['time'])->where('date','=',Carbon::today())->join('medication_notifications', 'medication_notifications.id', '=', 'daily_schedules.MedicationTimeID')->join('medications', 'medications.id', '=', 'medication_notifications.medicationID')->join('elderly_profiles', 'elderly_profiles.id', '=', 'medications.elderlyID')->select('taskname', 'medicationName', 'details', 'type', 'elderlyID', 'name', 'time','daily_schedules.id','status')->get();
+
 
         $array = [];
 
+        //based on the data in array to add the medication 
         foreach ($selctedTime as $data) {
             if (count($array) == 0) {
                 $array[] = [
@@ -103,6 +106,7 @@ class dailyScheduleController extends Controller
     }
 
 
+    //update the status 
     public function updateScheduleStatus(Request $request){
 
         $input = $request->all();

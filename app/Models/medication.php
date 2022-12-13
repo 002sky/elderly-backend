@@ -14,7 +14,8 @@ class medication extends Model
         'type',
         'description',
         'expireDate',
-        'manufactureDate',
+        'dose',
+        'image',
         'quantity',
         'elderlyID',
         

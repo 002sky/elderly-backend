@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('type');
             $table->string('description');
             $table->dateTime('expireDate', $precision = 0);
-            $table->dateTime('manufactureDate', $precision = 0);
+            $table->string('dose');
+            $table->binary('image')->nullable();
             $table->integer('quantity');
             $table->foreignId('elderlyID')->references('id')->on('elderly_profiles')->onDelete('cascade');
             $table->timestamps();

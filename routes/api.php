@@ -58,9 +58,4 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/updateScheduleStatus', [dailyScheduleController::class, 'updateScheduleStatus']);
 
 
-
-
-
-    
-
 });

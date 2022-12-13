@@ -9,33 +9,64 @@ use Illuminate\Support\Facades\DB;
 
 class medicationController extends Controller
 {
+    //get medication details from the databases
     public function getMedication()
     {
         $data = [];
 
-        $medication = DB::table('medications')->join('medication_notifications', 'medications.id','=','medication_notifications.medicationID')->select('medicationName','type','description','expireDate','manufactureDate','quantity','time_status','medications.id','elderlyID')->get();
+        try {
+            $medication = DB::table('medications')->join('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->select('medicationName', 'type', 'description', 'expireDate', 'dose', 'quantity', 'image', 'time_status', 'medications.id', 'elderlyID')->get();
 
-        foreach ($medication as $medica) {
-            $data[] = [
-                'id' => $medica->id,
-                'medicationName' => $medica->medicationName,
-                'type' => $medica->type,
-                'description' => $medica->description,
-                'expireDate' => $medica->expireDate,
-                'manufactureDate' => $medica->manufactureDate,
-                'quantity' => $medica->quantity,
-                'time'=> json_decode($medica->time_status),
-                'elderlyID' => $medica->elderlyID,
-            ];
-        };
+            if ($medication->isEmpty()) {
+                $medication = DB::table('medications')->get();
+                
+                foreach ($medication as $medica) {
+                    $data[] = [
+                        'id' => $medica->id,
+                        'medicationName' => $medica->medicationName,
+                        'type' => $medica->type,
+                        'description' => $medica->description,
+                        'expireDate' => $medica->expireDate,
+                        'dose' => $medica->dose,
+                        'image' => $medica->image,
+                        'quantity' => $medica->quantity,
+                        'elderlyID' => $medica->elderlyID,
+                    ];
+                };
+                return response()->json(
 
-        return response()->json(
+                    [$data]
 
-            [$data]
+                );
+            } else {
+                foreach ($medication as $medica) {
+                    $data[] = [
+                        'id' => $medica->id,
+                        'medicationName' => $medica->medicationName,
+                        'type' => $medica->type,
+                        'description' => $medica->description,
+                        'expireDate' => $medica->expireDate,
+                        'dose' => $medica->dose,
+                        'image' => $medica->image,
+                        'quantity' => $medica->quantity,
+                        'time' => json_decode($medica->time_status),
+                        'elderlyID' => $medica->elderlyID,
+                    ];
+                };
 
-        );
+                return response()->json(
+
+                    [$data]
+
+                );
+            }
+        } catch (e) {
+        }
     }
 
+
+
+    //add medication details 
     public function setMedication(Request $request)
     {
         $validator = Validator::make($request->all(), []);
@@ -55,7 +86,8 @@ class medicationController extends Controller
                 'type' => $input['type'],
                 'description' => $input['description'],
                 'expireDate' => $input['expireDate'],
-                'manufactureDate' => $input['manufactureDate'],
+                'dose' => $input['dose'],
+                'image' => $input['image'],
                 'quantity' => $input['quantity'],
                 'elderlyID' => $input['elderlyID'],
             ]
@@ -75,17 +107,19 @@ class medicationController extends Controller
         };
     }
 
-    public function getMedicationByID(Request $request){
+    //get the medication based on id
+    public function getMedicationByID(Request $request)
+    {
 
         $input = $request->all();
-    
-        $medicationByID = DB::table('medications')->where('elderlyID','=', $input['id'])->join('medication_notifications', 'medications.id','=','medication_notifications.medicationID')->select('medicationName','type','description','expireDate','manufactureDate','quantity','time_status','medications.id')->get();
 
-        if($medicationByID->count()>0){
+        $medicationByID = DB::table('medications')->where('elderlyID', '=', $input['id'])->join('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->select('medicationName', 'type', 'description', 'expireDate', 'manufactureDate', 'quantity', 'time_status', 'medications.id')->get();
+
+        if ($medicationByID->count() > 0) {
             return response()->json(
                 $medicationByID,
             );
-        }else{
+        } else {
             return response()->json([
                 'success' => false,
                 'message' => 'something went wrong',
