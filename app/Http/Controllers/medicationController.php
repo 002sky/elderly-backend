@@ -7,6 +7,8 @@ use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
+
 class medicationController extends Controller
 {
     //get medication details from the databases
@@ -15,51 +17,47 @@ class medicationController extends Controller
         $data = [];
 
         try {
-            $medication = DB::table('medications')->join('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->select('medicationName', 'type', 'description', 'expireDate', 'dose', 'quantity', 'image', 'time_status', 'medications.id', 'elderlyID')->get();
+            $medication = DB::table('medications')->leftJoin('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->select('medicationName', 'type', 'description', 'expireDate', 'dose', 'quantity', 'image', 'time_status', 'medications.id', 'elderlyID')->get();
+            // $medication2 = DB::table('medications')->get();
 
-            if ($medication->isEmpty()) {
-                $medication = DB::table('medications')->get();
-                
-                foreach ($medication as $medica) {
+            // $medicationUnion = $medication->union($medication2);
+
+            foreach ($medication as $mdlist) {
+                if (!empty($mdlist->time_status)) {
                     $data[] = [
-                        'id' => $medica->id,
-                        'medicationName' => $medica->medicationName,
-                        'type' => $medica->type,
-                        'description' => $medica->description,
-                        'expireDate' => $medica->expireDate,
-                        'dose' => $medica->dose,
-                        'image' => $medica->image,
-                        'quantity' => $medica->quantity,
-                        'elderlyID' => $medica->elderlyID,
+                        'id' => $mdlist->id,
+                        'medicationName' => $mdlist->medicationName,
+                        'type' => $mdlist->type,
+                        'description' => $mdlist->description,
+                        'expireDate' => $mdlist->expireDate,
+                        'dose' => $mdlist->dose,
+                        // 'image' => $mdlist->image,
+                        'quantity' => $mdlist->quantity,
+                        'time' => json_decode($mdlist->time_status),
+                        'elderlyID' => $mdlist->elderlyID,
                     ];
-                };
-                return response()->json(
-
-                    [$data]
-
-                );
-            } else {
-                foreach ($medication as $medica) {
+                } else {
                     $data[] = [
-                        'id' => $medica->id,
-                        'medicationName' => $medica->medicationName,
-                        'type' => $medica->type,
-                        'description' => $medica->description,
-                        'expireDate' => $medica->expireDate,
-                        'dose' => $medica->dose,
-                        'image' => $medica->image,
-                        'quantity' => $medica->quantity,
-                        'time' => json_decode($medica->time_status),
-                        'elderlyID' => $medica->elderlyID,
+
+                        'id' => $mdlist->id,
+                        'medicationName' => $mdlist->medicationName,
+                        'type' => $mdlist->type,
+                        'description' => $mdlist->description,
+                        'expireDate' => $mdlist->expireDate,
+                        'dose' => $mdlist->dose,
+                        // 'image' => $mdlist->image,
+                        'time' => null,
+                        'quantity' => $mdlist->quantity,
+                        'elderlyID' => $mdlist->elderlyID,
                     ];
-                };
-
-                return response()->json(
-
-                    [$data]
-
-                );
+                }
             }
+
+            return response()->json(
+
+                [$data]
+
+            );
         } catch (e) {
         }
     }
@@ -125,5 +123,33 @@ class medicationController extends Controller
                 'message' => 'something went wrong',
             ]);
         }
+    }
+
+
+
+    public function updateMedication(Request $request)
+    {
+        $medication = medication::find($request->id);
+
+        try {
+            $medication->medicationName = $request->medicationName;
+            $medication->type = $request->type;
+            $medication->description = $request->description;
+            $medication->roomID = $request->roomID;
+            $medication->dose = $request->dose;
+            $medication->quantity = $request->quantity;
+            $medication->elderlyID = $request->elderlyID;
+            $medication->image = $request->image;
+            $medication->save();
+        } catch (e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Update Faile',
+            ]);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Update successful',
+        ]);
     }
 }
