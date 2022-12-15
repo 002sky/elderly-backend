@@ -86,4 +86,12 @@ class medication_notification_controller extends Controller
             [$data]
         );
     }
+
+
+    public function updateDailySchedule(Request $request){
+        $input = $request->all();
+
+
+        
+    }
 }

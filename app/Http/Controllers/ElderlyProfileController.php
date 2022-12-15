@@ -62,8 +62,8 @@ class ElderlyProfileController extends Controller
         $data = [];
         $viewProfile = DB::table('elderly_profiles')->get();
         // $view = $viewProfile->toArray();
-        
-        foreach($viewProfile as $vp){
+
+        foreach ($viewProfile as $vp) {
             $data[] = [
                 'id' => $vp->id,
                 'name' => $vp->name,
@@ -72,7 +72,7 @@ class ElderlyProfileController extends Controller
                 'bedNo' => $vp->bedNo,
                 'roomID' => $vp->roomID,
                 'descrition' => $vp->descrition,
-                'elderlyImage'=> $vp->elderlyImage,
+                'elderlyImage' => $vp->elderlyImage,
                 'erID' => $vp->erID,
             ];
         };
@@ -81,7 +81,8 @@ class ElderlyProfileController extends Controller
         );
     }
 
-    public function viewElderlyProfileByID(String $id){
+    public function viewElderlyProfileByID(String $id)
+    {
 
         $data = [];
         $viewProfile = elderlyProfile::find($id);
@@ -100,27 +101,29 @@ class ElderlyProfileController extends Controller
         return response()->json(
             [$data]
         );
-
-
     }
 
 
     public function editElderlyProfile(Request $request)
     {
         $profile = elderlyProfile::find($request->id);
-        
-        try{
+
+        try {
+
+
+            if ($request->elderlyImage != null) {
+                $profile->elderlyImage = $request->elderlyImage;
+            }
+            
             $profile->name = $request->name;
             $profile->DOB = $request->DOB;
             $profile->gender = $request->gender;
             $profile->roomID = $request->roomID;
-            $profile->bedNo= $request-> bedNo;
-            $profile->descrition= $request-> descrition;
-            $profile->elderlyImage= $request-> elderlyImage;
-            $profile->erID = $request-> erID;
+            $profile->bedNo = $request->bedNo;
+            $profile->descrition = $request->descrition;
+            $profile->erID = $request->erID;
             $profile->save();
-
-        }catch(e){
+        } catch (e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Update Faile',
@@ -131,7 +134,5 @@ class ElderlyProfileController extends Controller
             'success' => true,
             'message' => 'Edits successful',
         ]);
-
-
     }
 }

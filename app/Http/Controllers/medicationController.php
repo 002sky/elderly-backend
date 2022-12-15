@@ -132,6 +132,10 @@ class medicationController extends Controller
         $medication = medication::find($request->id);
 
         try {
+            if ($request->image != null) {
+                $medication->image = $request->image;
+            }
+
             $medication->medicationName = $request->medicationName;
             $medication->type = $request->type;
             $medication->description = $request->description;
@@ -139,7 +143,7 @@ class medicationController extends Controller
             $medication->dose = $request->dose;
             $medication->quantity = $request->quantity;
             $medication->elderlyID = $request->elderlyID;
-            $medication->image = $request->image;
+
             $medication->save();
         } catch (e) {
             return response()->json([
