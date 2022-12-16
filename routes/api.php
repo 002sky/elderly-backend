@@ -6,6 +6,7 @@ use App\Http\Controllers\medicationController;
 use App\Http\Controllers\scheduleController;
 use App\Http\Controllers\imageController;
 use App\Http\Controllers\medication_notification_controller;
+use App\Http\Controllers\statusReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Models\medication;
@@ -52,6 +53,8 @@ Route::group(['prefix' => 'admin'], function () {
     
     Route::post('/setMedicationTiming', [medication_notification_controller::class, 'setMedicationTiming']);
     Route::get('/getMedicationTiming', [medication_notification_controller::class, 'getMedicationTiming']);
+    Route::post('/updateDailySchedule', [medication_notification_controller::class, 'updateDailySchedule']);
+    
 
     
     // Route::post('/getMedicationByID', [medicationController::class, 'getMedicationByID']);
@@ -61,5 +64,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/taskDetail', [dailyScheduleController::class, 'taskDetail']);
     Route::post('/updateScheduleStatus', [dailyScheduleController::class, 'updateScheduleStatus']);
 
+
+    //route for elderly status report 
+
+    Route::post('/setElderlyStatusReport', [statusReportController::class, 'setElderlyStatusReport']);
+    Route::get('/viewStatusReportStatus', [statusReportController::class, 'viewStatusReportStatus']);
+    Route::get('/getIncompleteElderlyStatus', [statusReportController::class, 'getIncompleteElderlyStatus']);
+
+    
+    
 
 });

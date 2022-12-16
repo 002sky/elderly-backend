@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\elderlyProfile;
+use App\Models\reportStatus;
+use App\Models\statusReport;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,8 +31,6 @@ class ElderlyProfileController extends Controller
             ], 401);
         }
 
-
-        // if (Auth::user()->status == 'is_Admin') {
         $input = $request->all();
         $profile = elderlyProfile::create(
             [
@@ -44,17 +44,27 @@ class ElderlyProfileController extends Controller
                 'erID' => $input['erID'],
             ]
         );
+        try {
 
+
+            if ($profile->exists()) {
+                $reportStatus = reportStatus::create(
+                    [
+                        'reportStatus' => false,
+                        'elderlyID' => $profile->id,
+                    ]
+                );
+            }
+        } catch (e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'error',
+            ], 401);
+        }
         return response()->json([
             'success' => true,
             'message' => 'create successful',
         ]);
-        // } else {
-        //     return response()->json(
-        //         ['success' => false, 
-        //         'message' => 'You are not an Admin']
-        //     );
-        // }
     }
 
     public function viewElderlyProfile()
@@ -114,7 +124,7 @@ class ElderlyProfileController extends Controller
             if ($request->elderlyImage != null) {
                 $profile->elderlyImage = $request->elderlyImage;
             }
-            
+
             $profile->name = $request->name;
             $profile->DOB = $request->DOB;
             $profile->gender = $request->gender;

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\daily_schedule;
 use App\Models\medication_notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\JsonDecoder;
 
 class medication_notification_controller extends Controller
 {
@@ -19,7 +21,7 @@ class medication_notification_controller extends Controller
 
         $medicationTiming = medication_notification::create(
             [
-                'medicationID' => $input['elderlyID'],
+                'medicationID' => $input['medicationID'],
                 'time_status' => json_encode($input['time_status']),
             ]
         );
@@ -89,9 +91,54 @@ class medication_notification_controller extends Controller
 
 
     public function updateDailySchedule(Request $request){
-        $input = $request->all();
+        
+        try{
+            $medicationTiming  = medication_notification::where('medicationID','=',$request->medicationID)->firstOrFail();
+
+            if(!empty($medicationTiming))
+            {
+                $medicationTiming->time_status = json_encode($request->time_status);
+               $saved =  $medicationTiming->save();
+            }
+
+            if($saved){
+
+                $deleteOldSchedule = DB::table('daily_schedules')->where('MedicationTimeID','=', $medicationTiming->id)->where('status','=',0)->where('date','=',Carbon::today()->format('y-m-d'))->delete();
 
 
+                $time = [];
+
+                $TimeJson = json_decode($medicationTiming->time_status);
+
+                foreach ($TimeJson as $TM) {
+                    $time[] = [
+                        'time' => date("H:i:s", strtotime($TM->Time)),
+                    ];
+                }
+    
+                foreach ($time as $t) {
+                    DB::table('daily_schedules')->insert(
+                        [
+                            'taskName' => 'Medication',
+                            'time' => date("H:i:s", strtotime( $t['time'])),
+                            'date' => Carbon::today()->format('y-m-d'),
+                            'status' => false,
+                            'MedicationTimeID' => $medicationTiming->id,
+                            'details' => json_encode(['dose']),
+                        ]
+                    );
+                }
+
+                return response() ->json(
+[                    'success' => true,
+                    'message' => 'Medication  timing update successful',]
+                );
+
+            }
+
+        }catch(e){
+
+        }
         
     }
 }
