@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\elderlyProfile;
+use App\Models\reportStatus;
 use App\Models\statusReport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,13 +40,20 @@ class statusReportController extends Controller
         $input = $request->all();
 
         try {
-            $report =  statusReport::created(
+            $report =  statusReport::create(
                 [
                     'report' => $input['report'],
-                    'writtenTime' => Carbon::today()->format('y-m-d'),
+                    'writtenTime' => Carbon::today(),
                     'elderlyID' => $input['elderlyID'],
                 ]
             );
+
+            if ($report) {
+                $reportStatus = reportStatus::where('elderlyID', '=', $input['elderlyID'])->firstOrFail();
+
+                $reportStatus->reportStatus = true;
+                $reportStatus->save();
+            }
 
             if ($report) {
                 return response()->json([
@@ -65,16 +73,14 @@ class statusReportController extends Controller
 
     public function getIncompleteElderlyStatus()
     {
-        $currentMothReport = DB::table('status_reports')->where('writtenTime', '=', Carbon::today()->format('y-m-d'))->get()->count();
+        $reportStatus = DB::table('report_statuses')
+            ->leftJoin('elderly_profiles', 'report_statuses.elderlyID', '=', 'elderly_profiles.id')
+            ->select('elderly_profiles.name', 'elderly_profiles.id', 'report_statuses.reportStatus')
+            ->where('report_statuses.reportStatus','!=',1)
+            ->get();
 
-        if ($currentMothReport > 0) {
-
-        } else {
-            $allElderly = elderlyProfile::all();
-
-            return response()->json(
-                $allElderly,
-            );
-        }
+        return response()->json(
+            $reportStatus,
+        );
     }
 }

@@ -31,7 +31,7 @@ class medicationController extends Controller
                         'description' => $mdlist->description,
                         'expireDate' => $mdlist->expireDate,
                         'dose' => $mdlist->dose,
-                        // 'image' => $mdlist->image,
+                        'image' => $mdlist->image,
                         'quantity' => $mdlist->quantity,
                         'time' => json_decode($mdlist->time_status),
                         'elderlyID' => $mdlist->elderlyID,
@@ -45,7 +45,7 @@ class medicationController extends Controller
                         'description' => $mdlist->description,
                         'expireDate' => $mdlist->expireDate,
                         'dose' => $mdlist->dose,
-                        // 'image' => $mdlist->image,
+                        'image' => $mdlist->image,
                         'time' => null,
                         'quantity' => $mdlist->quantity,
                         'elderlyID' => $mdlist->elderlyID,
@@ -139,7 +139,6 @@ class medicationController extends Controller
             $medication->medicationName = $request->medicationName;
             $medication->type = $request->type;
             $medication->description = $request->description;
-            $medication->roomID = $request->roomID;
             $medication->dose = $request->dose;
             $medication->quantity = $request->quantity;
             $medication->elderlyID = $request->elderlyID;

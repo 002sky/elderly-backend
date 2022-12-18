@@ -49,14 +49,14 @@ Route::group(['prefix' => 'admin'], function () {
     //medication function route
     Route::post('/setMedication', [medicationController::class, 'setMedication']);
     Route::get('/getMedication', [medicationController::class, 'getMedication']);
-    Route::post('/updateMedication', [medication_notification_controller::class, 'updateMedication']);
+    Route::post('/updateMedication', [medicationController::class, 'updateMedication']);
     
     Route::post('/setMedicationTiming', [medication_notification_controller::class, 'setMedicationTiming']);
     Route::get('/getMedicationTiming', [medication_notification_controller::class, 'getMedicationTiming']);
     Route::post('/updateDailySchedule', [medication_notification_controller::class, 'updateDailySchedule']);
     
 
-    
+
     // Route::post('/getMedicationByID', [medicationController::class, 'getMedicationByID']);
 
     //daily schedule function route

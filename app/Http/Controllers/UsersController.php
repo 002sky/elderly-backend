@@ -51,7 +51,7 @@ class UsersController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'phone' => 'required|unique:users|regex:/(0)[0-9]{10}/',
+            'phone' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'status' => 'required',
@@ -69,6 +69,7 @@ class UsersController extends Controller
        
         return response()->json([
           'success' => true,
+          'message' => 'created succeffuly',
           'token' => $success,
           'user' => $user
       ]);
