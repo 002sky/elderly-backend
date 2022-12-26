@@ -71,6 +71,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/viewStatusReportStatus', [statusReportController::class, 'viewStatusReportStatus']);
     Route::get('/getIncompleteElderlyStatus', [statusReportController::class, 'getIncompleteElderlyStatus']);
 
+    Route::get('/getOverView', [medicationController::class, 'getOverView']);
     
     
 

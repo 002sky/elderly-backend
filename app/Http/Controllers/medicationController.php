@@ -6,8 +6,7 @@ use App\Models\medication;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-
+use PhpParser\JsonDecoder;
 
 class medicationController extends Controller
 {
@@ -154,5 +153,100 @@ class medicationController extends Controller
             'success' => true,
             'message' => 'Update successful',
         ]);
+    }
+
+
+
+
+    public function getOverView()
+    {
+        $timeMedication = DB::table('medication_notifications')->join('medications', 'medications.id', '=', 'medication_notifications.medicationID')->join('elderly_profiles', 'elderly_profiles.id', '=', 'medications.elderlyID')->select('medicationID', 'time_status', 'medicationName', 'name', 'dose')->get();
+
+        $time_array = [];
+
+        foreach ($timeMedication as $ta) {
+            $TimeJson = [];
+
+            $TimeJson = json_decode($ta->time_status);
+
+            foreach ($TimeJson as $TM) {
+                $time[] = [
+                    'time' => date("H:i:s", strtotime($TM->Time)),
+                    'MedicationName' => $ta->medicationName,
+                    'Elderly_Name' => $ta->name,
+                    'dose' => $ta->dose,
+                ];
+            }
+        }
+
+
+        $finalJson = [];
+        foreach ($time as $t) {
+
+            if (count($finalJson) == 0) {
+                $finalJson[] = [
+                    'time' => $t['time'],
+                    'Eldelry' => [
+                        'Elderly_Name' => $t['Elderly_Name'],
+                        'medicationName' => $t['MedicationName'],
+                        'dose' => $t['dose'],
+
+
+                    ]
+                ];
+            } else if (count($finalJson) > 0) {
+                $times = $t['time'];
+                // if($time == ])
+                if (in_array($times, array_column($finalJson, 'time'))) {
+                    $index = array_search($times, array_column($finalJson, 'time'));
+
+
+                    $item = [];
+                    $item[] = $finalJson[$index]['Eldelry'];
+
+
+                    $addItem = [
+                        'Elderly_Name' => $t['Elderly_Name'],
+                        'medicationName' => $t['MedicationName'],
+                        'dose' => $t['dose'],
+
+                    ];
+
+
+                    if (isset($item[0][0])) {
+                        array_push($item[0], $addItem);
+
+                        $item = $item[0];
+                    } else {
+                        array_push($item, $addItem);
+                    }
+
+                    $finalJson[$index] = [
+                        'time' => $t['time'],
+                        'Eldelry' => $item,
+                    ];
+                } else {
+                    $finalJson[] = [
+                        'time' => $t['time'],
+                        'Eldelry' => [
+                            'Elderly_Name' => $t['Elderly_Name'],
+                            'medicationName' => $t['MedicationName'],
+                            'dose' => $t['dose'],
+
+
+                        ]
+                    ];
+                }
+            }
+        }
+
+
+        return response()->json(
+            [
+
+                $finalJson,
+                // $timeMedication,
+            ]
+        );
     }
 }
