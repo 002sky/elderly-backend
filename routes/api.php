@@ -6,6 +6,7 @@ use App\Http\Controllers\medicationController;
 use App\Http\Controllers\scheduleController;
 use App\Http\Controllers\imageController;
 use App\Http\Controllers\medication_notification_controller;
+use App\Http\Controllers\messageBoxController;
 use App\Http\Controllers\statusReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
@@ -31,6 +32,14 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [UsersController::class, 'login']);
     Route::post('/register', [UsersController::class, 'register']);
     Route::get('/logout', [UsersController::class, 'logout'])->middleware('auth:api');
+});
+
+
+Route::group(['prefix' => 'All'], function () {
+    Route::post('/getAllMessage', [messageBoxController::class, 'getAllMessage']);
+    Route::post('/getAllReceiver', [messageBoxController::class, 'getAllReceiver']);
+
+  
 });
 
 Route::group(['prefix' => 'admin'], function () {
