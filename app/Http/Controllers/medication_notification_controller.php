@@ -105,7 +105,6 @@ class medication_notification_controller extends Controller
 
                 $deleteOldSchedule = DB::table('daily_schedules')->where('MedicationTimeID','=', $medicationTiming->id)->where('status','=',0)->where('date','=',Carbon::today()->format('y-m-d'))->delete();
 
-
                 $time = [];
 
                 $TimeJson = json_decode($medicationTiming->time_status);

@@ -191,7 +191,6 @@ class medicationController extends Controller
                         'medicationName' => $t['MedicationName'],
                         'dose' => $t['dose'],
 
-
                     ]
                 ];
             } else if (count($finalJson) > 0) {
@@ -199,19 +198,14 @@ class medicationController extends Controller
                 // if($time == ])
                 if (in_array($times, array_column($finalJson, 'time'))) {
                     $index = array_search($times, array_column($finalJson, 'time'));
-
-
                     $item = [];
                     $item[] = $finalJson[$index]['Eldelry'];
-
 
                     $addItem = [
                         'Elderly_Name' => $t['Elderly_Name'],
                         'medicationName' => $t['MedicationName'],
                         'dose' => $t['dose'],
-
                     ];
-
 
                     if (isset($item[0][0])) {
                         array_push($item[0], $addItem);
@@ -220,7 +214,6 @@ class medicationController extends Controller
                     } else {
                         array_push($item, $addItem);
                     }
-
                     $finalJson[$index] = [
                         'time' => $t['time'],
                         'Eldelry' => $item,

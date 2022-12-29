@@ -38,9 +38,17 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'All'], function () {
     Route::post('/getAllMessage', [messageBoxController::class, 'getAllMessage']);
     Route::post('/getAllReceiver', [messageBoxController::class, 'getAllReceiver']);
+    Route::post('/sendMessage', [messageBoxController::class, 'sendMessage']);
 
-  
 });
+
+Route::group(['prefix' => 'relative'], function () {
+
+    Route::post('/getCompleteElderlyStatusByID', [statusReportController::class, 'getCompleteElderlyStatusByID']);
+
+
+});
+
 
 Route::group(['prefix' => 'admin'], function () {
     //profile function
@@ -75,13 +83,10 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     //route for elderly status report 
-
     Route::post('/setElderlyStatusReport', [statusReportController::class, 'setElderlyStatusReport']);
     Route::get('/viewStatusReportStatus', [statusReportController::class, 'viewStatusReportStatus']);
     Route::get('/getIncompleteElderlyStatus', [statusReportController::class, 'getIncompleteElderlyStatus']);
-
     Route::get('/getOverView', [medicationController::class, 'getOverView']);
-    
     
 
 });

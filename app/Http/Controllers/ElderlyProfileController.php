@@ -39,7 +39,7 @@ class ElderlyProfileController extends Controller
                 'gender' => $input['gender'],
                 'bedNo' => $input['bedNo'],
                 'roomID' => $input['roomID'],
-                'descrition' => 'descrition',
+                'descrition' =>  $input['descrition'],
                 'elderlyImage' => $input['elderlyImage'],
                 'erID' => $input['erID'],
             ]

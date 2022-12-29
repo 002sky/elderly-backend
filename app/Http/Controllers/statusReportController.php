@@ -76,11 +76,20 @@ class statusReportController extends Controller
         $reportStatus = DB::table('report_statuses')
             ->leftJoin('elderly_profiles', 'report_statuses.elderlyID', '=', 'elderly_profiles.id')
             ->select('elderly_profiles.name', 'elderly_profiles.id', 'report_statuses.reportStatus')
-            ->where('report_statuses.reportStatus','!=',1)
+            ->where('report_statuses.reportStatus', '!=', 1)
             ->get();
 
         return response()->json(
             $reportStatus,
         );
+    }
+
+
+    public function getCompleteElderlyStatusByID(Request $request)
+    {
+
+        $completeReport = DB::table('elderly_profiles')->join('users', 'users.id', '=', 'elderly_profiles.erID')->Join('status_reports','status_reports.elderlyID','=','elderly_profiles.id')->where('elderly_profiles.erID','=',$request->id)->select('status_reports.report','elderly_profiles.name','status_reports.writtenTime')->get();
+
+        return response()->json($completeReport);
     }
 }
