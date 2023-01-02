@@ -143,7 +143,7 @@ class appointmentController extends Controller
     public function getAppointmentByID(Request $request)
     {
 
-        $allAppointment = DB::table('appointments')->where('userID', '=', $request->id)->whereDate('updated_at', '>=', Carbon::now()->subDays(7))->get();
+        $allAppointment = Appointment::Where('userID', '=', $request->id)->whereDate('updated_at', '>=', Carbon::now()->subDays(7))->with('userInfor')->get();
 
 
         foreach ($allAppointment as $ap) {
@@ -153,7 +153,8 @@ class appointmentController extends Controller
                 'reason' => $ap->reason,
                 'date' => $ap->date,
                 'time' => $ap->time,
-                'userID' => $ap->userID
+                'userID' => $ap->userID,
+                'userName' => $ap->userInfor->name,
             ];
         };
 
