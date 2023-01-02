@@ -116,8 +116,6 @@ class appointmentController extends Controller
         }
     }
 
-
-
     public function getAllApointmentRequest()
     {
         $allAppointment = Appointment::Where('status', '=', null)->with('userInfor')->get();
@@ -142,9 +140,7 @@ class appointmentController extends Controller
 
     public function getAppointmentByID(Request $request)
     {
-
         $allAppointment = Appointment::Where('userID', '=', $request->id)->whereDate('updated_at', '>=', Carbon::now()->subDays(7))->with('userInfor')->get();
-
 
         foreach ($allAppointment as $ap) {
             $data[] = [

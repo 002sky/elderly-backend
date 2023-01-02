@@ -61,8 +61,6 @@ class medicationController extends Controller
         }
     }
 
-
-
     //add medication details 
     public function setMedication(Request $request)
     {
@@ -108,11 +106,8 @@ class medicationController extends Controller
     //get the medication based on id
     public function getMedicationByID(Request $request)
     {
-
         $input = $request->all();
-
         $medicationByID = DB::table('medications')->where('elderlyID', '=', $input['id'])->join('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->select('medicationName', 'type', 'description', 'expireDate', 'manufactureDate', 'quantity', 'time_status', 'medications.id')->get();
-
         if ($medicationByID->count() > 0) {
             return response()->json(
                 $medicationByID,
@@ -124,8 +119,6 @@ class medicationController extends Controller
             ]);
         }
     }
-
-
 
     public function updateMedication(Request $request)
     {
@@ -156,20 +149,14 @@ class medicationController extends Controller
         ]);
     }
 
-
-
-
     public function getOverView()
     {
         $timeMedication = DB::table('medication_notifications')->join('medications', 'medications.id', '=', 'medication_notifications.medicationID')->join('elderly_profiles', 'elderly_profiles.id', '=', 'medications.elderlyID')->select('medicationID', 'time_status', 'medicationName', 'name', 'dose')->get();
-
         $time_array = [];
 
         foreach ($timeMedication as $ta) {
             $TimeJson = [];
-
             $TimeJson = json_decode($ta->time_status);
-
             foreach ($TimeJson as $TM) {
                 $time[] = [
                     'time' => date("H:i:s", strtotime($TM->Time)),
@@ -179,8 +166,6 @@ class medicationController extends Controller
                 ];
             }
         }
-
-
         $finalJson = [];
         foreach ($time as $t) {
 

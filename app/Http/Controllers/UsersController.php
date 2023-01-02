@@ -74,4 +74,24 @@ class UsersController extends Controller
           'user' => $user
       ]);
     }
+
+
+    public function getAllRelative(){
+
+        $allRelative = User::where('status','=','Relative')->get();
+
+
+        foreach ($allRelative as $AR) {
+            $ARList[] = [
+                'id' => $AR->id,
+                'name'=> $AR->name,
+
+            ];
+        }
+
+        return response()->json(
+            [$ARList]
+        );
+
+    }
 }

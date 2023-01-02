@@ -105,6 +105,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 
+    //get relative for dropdownmenu 
+    Route::get('/getAllRelative', [UsersController::class, 'getAllRelative']);
 
 
 
