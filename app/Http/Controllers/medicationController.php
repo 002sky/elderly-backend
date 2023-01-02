@@ -89,6 +89,7 @@ class medicationController extends Controller
                 'elderlyID' => $input['elderlyID'],
             ]
         );
+        
         if ($medication->exists) {
             return response()->json([
                 'success' => true,

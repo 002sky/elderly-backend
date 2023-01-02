@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\appointmentController;
 use App\Http\Controllers\dailyScheduleController;
 use App\Http\Controllers\ElderlyProfileController;
 use App\Http\Controllers\medicationController;
@@ -47,6 +48,13 @@ Route::group(['prefix' => 'relative'], function () {
     Route::post('/getCompleteElderlyStatusByID', [statusReportController::class, 'getCompleteElderlyStatusByID']);
 
 
+    //make appointment 
+    Route::post('/makeAppointment', [appointmentController::class, 'makeAppointment']);
+    Route::post('/getAppointmentByID', [appointmentController::class, 'getAppointmentByID']);
+
+
+    
+
 });
 
 
@@ -88,5 +96,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/getIncompleteElderlyStatus', [statusReportController::class, 'getIncompleteElderlyStatus']);
     Route::get('/getOverView', [medicationController::class, 'getOverView']);
     
+
+    //get appointment 
+    Route::get('/getAllApointment', [appointmentController::class, 'getAllApointment']);
+    Route::post('/approvalAppointment', [appointmentController::class, 'approvalAppointment']);
+    Route::get('/getAllApointmentRequest', [appointmentController::class, 'getAllApointmentRequest']);
+    Route::post('/disapprovalAppointment', [appointmentController::class, 'disapprovalAppointment']);
+
+
+
+
+
 
 });

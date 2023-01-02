@@ -120,7 +120,6 @@ class ElderlyProfileController extends Controller
 
         try {
 
-
             if ($request->elderlyImage != null) {
                 $profile->elderlyImage = $request->elderlyImage;
             }

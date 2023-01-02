@@ -69,7 +69,7 @@ class UsersController extends Controller
        
         return response()->json([
           'success' => true,
-          'message' => 'created succeffuly',
+          'message' => 'created successfully',
           'token' => $success,
           'user' => $user
       ]);
