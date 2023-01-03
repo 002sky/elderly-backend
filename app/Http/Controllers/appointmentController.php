@@ -158,4 +158,68 @@ class appointmentController extends Controller
             [$data]
         );
     }
+
+
+
+    public function getAppointmentOverview()
+    {
+
+        $appointmentTime = appointment::whereDate('appointments.updated_at', '>=', Carbon::now()->subDays(7))->where('status', '=', 1)->with('userInfor')->get();
+
+        $finalJson = [];
+        foreach ($appointmentTime as $t) {
+            if (count($finalJson) == 0) {
+                $finalJson[] = [
+                    'date' => $t->date,
+                    'Relative' => [
+                        'relativeName' => $t->userInfor->name,
+                        'time' => $t->time,
+                        'reason' => $t->reason,
+                    ]
+                ];
+            } else if (count($finalJson) > 0) {
+                $times = $t->date;
+                // if($time == ])
+                if (in_array($times, array_column($finalJson, 'date'))) {
+                    $index = array_search($times, array_column($finalJson, 'date'));
+                    $item = [];
+                    $item[] = $finalJson[$index]['Relative'];
+
+                    $addItem = [
+                        'relativeName' => $t->userInfor->name,
+                        'time' => $t->time,
+                        'reason' => $t->reason,
+                    ];
+
+                    if (isset($item[0][0])) {
+                        array_push($item[0], $addItem);
+
+                        $item = $item[0];
+                    } else {
+                        array_push($item, $addItem);
+                    }
+
+                    $finalJson[$index] = [
+                        'date' => $t->date,
+                        'Relative' => $item,
+                    ];
+                } else {
+                    $finalJson[] = [
+                        'date' => $t->date,
+                        'Relative' => [
+                            'relativeName' => $t->userInfor->name,
+                            'time' => $t->time,
+                            'reason' => $t->reason,
+                        ]
+                    ];
+                }
+            }
+        }
+        return response()->json(
+            [
+                $finalJson,
+                // $timeMedication,
+            ]
+        );
+    }
 }

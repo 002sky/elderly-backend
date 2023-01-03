@@ -144,4 +144,22 @@ class ElderlyProfileController extends Controller
             'message' => 'Edits successful',
         ]);
     }
+
+
+    public function getElderlyMenu()
+    {
+
+        $elderlyMenu = ElderlyProfile::all();
+
+        foreach ($elderlyMenu as $menu) {
+            $menuJson[] = [
+                'id' => $menu->id,
+                'name' => $menu->name,
+            ];
+        }
+
+        return response()->json(
+            [$menuJson]
+        );
+    }
 }

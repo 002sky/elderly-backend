@@ -16,10 +16,8 @@ class medicationController extends Controller
         $data = [];
 
         try {
-            $medication = DB::table('medications')->leftJoin('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->select('medicationName', 'type', 'description', 'expireDate', 'dose', 'quantity', 'image', 'time_status', 'medications.id', 'elderlyID')->get();
-            // $medication2 = DB::table('medications')->get();
+            $medication = DB::table('medications')->leftJoin('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->join('elderly_profiles','elderly_profiles.id','=','medications.elderlyID')->select('medicationName', 'type', 'description', 'expireDate', 'dose', 'quantity', 'image', 'time_status', 'medications.id', 'medications.elderlyID','elderly_profiles.name')->get();
 
-            // $medicationUnion = $medication->union($medication2);
 
             foreach ($medication as $mdlist) {
                 if (!empty($mdlist->time_status)) {
@@ -34,6 +32,7 @@ class medicationController extends Controller
                         'quantity' => $mdlist->quantity,
                         'time' => json_decode($mdlist->time_status),
                         'elderlyID' => $mdlist->elderlyID,
+                        'name' => $mdlist->name,
                     ];
                 } else {
                     $data[] = [
@@ -48,6 +47,7 @@ class medicationController extends Controller
                         'time' => null,
                         'quantity' => $mdlist->quantity,
                         'elderlyID' => $mdlist->elderlyID,
+                        'name' => $mdlist->name,
                     ];
                 }
             }
@@ -218,11 +218,8 @@ class medicationController extends Controller
                 }
             }
         }
-
-
         return response()->json(
             [
-
                 $finalJson,
                 // $timeMedication,
             ]

@@ -101,12 +101,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/getAllApointment', [appointmentController::class, 'getAllApointment']);
     Route::post('/approvalAppointment', [appointmentController::class, 'approvalAppointment']);
     Route::get('/getAllApointmentRequest', [appointmentController::class, 'getAllApointmentRequest']);
+    Route::get('/getAppointmentOverview', [appointmentController::class, 'getAppointmentOverview']);
+
     Route::post('/disapprovalAppointment', [appointmentController::class, 'disapprovalAppointment']);
 
 
 
     //get relative for dropdownmenu 
     Route::get('/getAllRelative', [UsersController::class, 'getAllRelative']);
+    Route::get('/getElderlyMenu', [ElderlyProfileController::class, 'getElderlyMenu']);
+
 
 
 
