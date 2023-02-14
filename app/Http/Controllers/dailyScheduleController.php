@@ -13,7 +13,7 @@ class dailyScheduleController extends Controller
 {
     public function scheduleWithin6Hour()
     {
-
+        
         //  $data = daily_schedule::whereBetween('time',[Carbon::now()->hour()->format('H:i:s'),Carbon::now()->hour()->addHour(2)->format('H:i:s')])->get();
         $data = daily_schedule::all()->where('date', '=', Carbon::today());
         $timeArr = [];
@@ -29,6 +29,8 @@ class dailyScheduleController extends Controller
         $arry = array_unique($timeArr, SORT_REGULAR);
 
         $a = array_values($arry);
+
+        
 
         return response()->json(
 

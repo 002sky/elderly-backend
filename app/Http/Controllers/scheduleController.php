@@ -11,7 +11,6 @@ class scheduleController extends Controller
 {
     public function addSchedule(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'eventName' => 'required',
             'start_time' => 'required',
@@ -50,6 +49,9 @@ class scheduleController extends Controller
             ]);
         };
     }
+
+
+
 
 
     public function getSchduleData(Request $request){

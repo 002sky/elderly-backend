@@ -17,15 +17,12 @@ class medication_notification_controller extends Controller
     {
 
         $input = $request->all();
-
-
         $medicationTiming = medication_notification::create(
             [
                 'medicationID' => $input['medicationID'],
                 'time_status' => json_encode($input['time_status']),
             ]
         );
-
         $time = [];
 
         if ($medicationTiming->exists) {
@@ -37,8 +34,6 @@ class medication_notification_controller extends Controller
                     'time' => date("H:i:s", strtotime($TM['Time'])),
                 ];
             }
-
-
             foreach ($time as $t) {
                 DB::table('daily_schedules')->insert(
                     [
@@ -53,7 +48,6 @@ class medication_notification_controller extends Controller
             }
         }
 
-
         if ($medicationTiming->exists) {
             return response()->json([
                 'success' => true,
@@ -67,6 +61,8 @@ class medication_notification_controller extends Controller
             ]);
         };
     }
+
+
     public function getMedicationTiming()
     {
 

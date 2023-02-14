@@ -116,6 +116,9 @@ class appointmentController extends Controller
         }
     }
 
+
+
+    
     public function getAllApointmentRequest()
     {
         $allAppointment = Appointment::Where('status', '=', null)->with('userInfor')->get();
