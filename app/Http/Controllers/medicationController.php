@@ -107,6 +107,7 @@ class medicationController extends Controller
     public function getMedicationByID(Request $request)
     {
         $input = $request->all();
+        
         $medicationByID = DB::table('medications')->where('elderlyID', '=', $input['id'])->join('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->select('medicationName', 'type', 'description', 'expireDate', 'manufactureDate', 'quantity', 'time_status', 'medications.id')->get();
         if ($medicationByID->count() > 0) {
             return response()->json(
