@@ -18,7 +18,6 @@ class medicationController extends Controller
         try {
             $medication = DB::table('medications')->leftJoin('medication_notifications', 'medications.id', '=', 'medication_notifications.medicationID')->join('elderly_profiles','elderly_profiles.id','=','medications.elderlyID')->select('medicationName', 'type', 'description', 'expireDate', 'dose', 'quantity', 'image', 'time_status', 'medications.id', 'medications.elderlyID','elderly_profiles.name')->get();
 
-
             foreach ($medication as $mdlist) {
                 if (!empty($mdlist->time_status)) {
                     $data[] = [
@@ -169,7 +168,6 @@ class medicationController extends Controller
         }
         $finalJson = [];
         foreach ($time as $t) {
-
             if (count($finalJson) == 0) {
                 $finalJson[] = [
                     'time' => $t['time'],
@@ -177,12 +175,10 @@ class medicationController extends Controller
                         'Elderly_Name' => $t['Elderly_Name'],
                         'medicationName' => $t['MedicationName'],
                         'dose' => $t['dose'],
-
                     ]
                 ];
             } else if (count($finalJson) > 0) {
                 $times = $t['time'];
-                // if($time == ])
                 if (in_array($times, array_column($finalJson, 'time'))) {
                     $index = array_search($times, array_column($finalJson, 'time'));
                     $item = [];
@@ -212,8 +208,6 @@ class medicationController extends Controller
                             'Elderly_Name' => $t['Elderly_Name'],
                             'medicationName' => $t['MedicationName'],
                             'dose' => $t['dose'],
-
-
                         ]
                     ];
                 }
@@ -222,7 +216,6 @@ class medicationController extends Controller
         return response()->json(
             [
                 $finalJson,
-                // $timeMedication,
             ]
         );
     }
