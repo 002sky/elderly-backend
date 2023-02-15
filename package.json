@@ -15,5 +15,10 @@
         "sass": "^1.56.1",
         "vite": "^3.0.0",
         "vue": "^3.2.37"
+    },
+    "dependencies": {
+        "libphonenumber-js": "^1.10.19",
+        "maz-ui": "^3.6.12",
+        "vue-phone-number-input": "^1.12.13"
     }
 }

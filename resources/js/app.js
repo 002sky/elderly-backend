@@ -6,6 +6,8 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import 'maz-ui/css/main.css'
+
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -17,6 +19,10 @@ const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
 app.component('example-component', ExampleComponent);
+
+import MazPhoneNumberInput from './components/phoneNumberInput.vue';
+app.component('phone-input', MazPhoneNumberInput);
+
 
 /**
  * The following block of code may be used to automatically register your
