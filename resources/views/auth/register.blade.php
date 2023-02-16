@@ -45,7 +45,10 @@
                         <div id="app" class="row mb-3">
                             <label for="phNo" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number')
                             }}</label>
+                            
+                            <!-- Vue component Customer with maz -->
                             <phone-input id="phNo" name='phNo' class="col-md-6"> </phone-input>
+
                             @error('phNo')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

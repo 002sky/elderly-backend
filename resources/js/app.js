@@ -6,8 +6,8 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
-import 'maz-ui/css/main.css'
-
+import 'maz-ui/css/main.css';
+import '../css/style.css';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
