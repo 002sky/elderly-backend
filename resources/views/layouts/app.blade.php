@@ -15,6 +15,13 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../public/css/style.css">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" type="text/css" href="../../css/fontawesome-free/css/all.min.css">
+
 </head>
 <body>
     <div id="app">
@@ -36,6 +43,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
+                        
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -76,5 +84,6 @@
             @yield('content')
         </main>
     </div>
+    <script src="../../js/index.js"></script>
 </body>
 </html>
