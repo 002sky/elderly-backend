@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -44,10 +44,10 @@
 
                         <div id="app" class="row mb-3">
                             <label for="phNo" class="col-md-4 col-form-label text-md-end">{{ __('Phone Number')
-                            }}</label>
-                            
-                            <!-- Vue component Customer with maz -->
-                            <phone-input id="phNo" name='phNo' class="col-md-6"> </phone-input>
+                            }}</label> -->
+
+<!-- Vue component Customer with maz -->
+<!-- <phone-input id="phNo" name='phNo' class="col-md-6"> </phone-input>
 
                             @error('phNo')
                             <span class="invalid-feedback" role="alert">
@@ -96,5 +96,95 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+<main>
+    <div class="container">
+
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <div class="d-flex justify-content-center py-4" style="padding-top: 0 !important;">
+                            <a href="index.html" class="logo d-flex align-items-center w-auto">
+                                <span class="d-none d-lg-block">WeCare</span>
+                            </a>
+                        </div><!-- End Logo -->
+
+                        <div class="card mb-3">
+
+                            <div class="card-body">
+
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Register Account</h5>
+                                    <p class="text-center small">Enter your details to register an account</p>
+                                </div>
+
+                                <form class="row g-3 needs-validation" novalidate>
+                                    <div class="col-12">
+                                        <label for="yourUsername" class="form-label">Name</label>
+                                        <div class="input-group">
+
+                                            <input type="text" name="username" class="form-control" id="yourUsername" required>
+                                            <div class="invalid-feedback">Please enter your username.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="yourUsername" class="form-label">Email</label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            <input type="text" name="username" class="form-control" id="yourUsername" required>
+                                            <div class="invalid-feedback">Please enter your email.</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Vue component Customer with maz -->
+                                    <div id="app" class="col-12">
+                                        <label for="phNo" class="form-label">{{ __('Phone Number')}}</label>
+
+                                        <!-- Vue component Customer with maz -->
+                                        <phone-input id="phNo" name='phNo' class="col-md-12"> </phone-input>
+
+                                        @error('phNo')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="yourPassword" class="form-label">Password</label>
+                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="yourPassword" class="form-label">Confirm Password</label>
+                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 loginbtn" type="submit">Register</button>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">Already had an account? <a href="pages-register.html">Login</a></p>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main><!-- End #main -->
 @endsection

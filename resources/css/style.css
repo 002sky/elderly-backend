@@ -41,9 +41,6 @@
     padding: 20px 30px;
     transition: all 0.3s;
   }
-  .py-4{
-    padding-top: 0;
-  }
   
   @media (max-width: 1199px) {
     #main {
@@ -150,6 +147,15 @@
   
   .dropdown-menu .dropdown-item:hover {
     background-color: #f6f9ff;
+  }
+
+  .loginbtn{
+    background-color: rgb(90,193,142);
+    border: none;
+  }
+
+  .loginbtn:hover{
+    background-color: rgb(69, 149, 109);
   }
   
   @media (min-width: 768px) {
